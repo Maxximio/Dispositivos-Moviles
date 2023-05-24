@@ -1,4 +1,4 @@
-package com.exam.dispositivosmoviles
+package com.exam.dispositivosmoviles.ui.activities
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         var boton1 = binding.button
         var txtBuscar = binding.textView3
         boton1.elevation
+
+//        sumar
+
+
 
         binding.button.setOnClickListener{
             boton1.text="Hola"
