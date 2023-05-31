@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.SearchView
 import android.widget.TextView
 import com.exam.dispositivosmoviles.databinding.ActivityMainBinding
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        Log.d("UCE", "Entrando a Create")
     }
 
     override fun onStart() {
@@ -59,6 +61,8 @@ class MainActivity : AppCompatActivity() {
                 this,
                 MainActivity2::class.java
             )
+            intent.putExtra("var1" , binding.edit.text.toString())
+
             startActivity(intent)
         }
     }
