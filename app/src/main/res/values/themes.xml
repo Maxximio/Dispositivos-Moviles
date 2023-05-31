@@ -48,5 +48,10 @@
 <!--        <item name="queryHint">@string/search_hint</item>-->
     </style>
 
+    <style name="barraBusqueda" parent="Widget.AppCompat.TextView">
+        <item name="android:textColorPrimary">@color/white_dm</item>
+
+    </style>
+
 
 </resources>

@@ -1,6 +1,7 @@
-package com.exam.dispositivosmoviles
+package com.exam.dispositivosmoviles.ui.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SearchView
@@ -26,27 +27,42 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun initClass() {
-        var boton1 = binding.button
-        var txtBuscar = binding.textView3
-        boton1.elevation
+//    private fun initClass() {
+//        var boton1 = binding.button
+//        var txtBuscar = binding.textView3
+//        boton1.elevation
+//
+////        sumar
+//
+//
+//
+//        binding.button.setOnClickListener{
+//            boton1.text="Hola"
+//            txtBuscar.text="Buscando..."
+//            binding.textView3.text = "El Codigo ejecutado"
+//            var f=Snackbar.make(
+//                binding.button, "Es mensaje", Snackbar.LENGTH_LONG
+//            )
+//            f.show()
+//        }
+//
+//
+//
+//
+//
+//
+//    }
 
+    private fun initClass(){
         binding.button.setOnClickListener{
-            boton1.text="Hola"
-            txtBuscar.text="Buscando..."
-            binding.textView3.text = "El Codigo ejecutado"
-            var f=Snackbar.make(
-                binding.button, "Es mensaje", Snackbar.LENGTH_LONG
+            var intent = Intent(
+                this,
+                MainActivity2::class.java
             )
-            f.show()
+            startActivity(intent)
         }
-
-
-
-
-
-
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
