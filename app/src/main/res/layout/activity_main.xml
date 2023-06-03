@@ -7,18 +7,7 @@
     android:background="@color/white_dm"
     tools:context=".ui.activities.MainActivity">
 
-    <Button
-        android:id="@+id/button3"
-        style="@style/ButtonsGeneral"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.387"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.492" />
+
 
     <TextView
         android:id="@+id/textView"
@@ -40,43 +29,49 @@
     <Button
         android:id="@+id/button"
         style="@style/ButtonsGeneral"
-        android:layout_width="61dp"
-        android:layout_height="41dp"
+        android:layout_width="170dp"
+        android:layout_height="59dp"
         android:backgroundTint="#831339"
         android:text="@string/button"
+        android:textSize="24sp"
         app:icon="@drawable/baseline_settings_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.833"
+        app:layout_constraintHorizontal_bias="0.443"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.086"
-        tools:text="   " />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="231dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="32dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF"
-        android:shadowColor="@color/white_dm"
-        android:text="Search"
-
-        app:layout_constraintEnd_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintVertical_bias="0.534"
+        tools:text="Ingresar" />
 
     <EditText
-        android:id="@+id/edit"
+        android:id="@+id/edit_name"
         android:layout_width="231dp"
         android:layout_height="38dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        android:hint="Username"
+        android:paddingLeft="30px"
+        app:layout_constraintBottom_toTopOf="@+id/edit_pass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.161"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.893" />
+
+    <EditText
+        android:id="@+id/edit_pass"
+        android:layout_width="231dp"
+        android:layout_height="38dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        android:paddingLeft="30px"
+        android:hint="Password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.161"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.278" />
+        app:layout_constraintVertical_bias="0.393" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

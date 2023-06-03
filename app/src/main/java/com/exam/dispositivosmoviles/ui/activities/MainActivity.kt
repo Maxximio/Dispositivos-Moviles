@@ -8,9 +8,14 @@ import android.util.Log
 import android.widget.SearchView
 import android.widget.TextView
 import com.exam.dispositivosmoviles.databinding.ActivityMainBinding
+import com.exam.dispositivosmoviles.login.validator.LoginValidator
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
+
+
+
+
 
     private lateinit var binding: ActivityMainBinding
     var a = 2
@@ -56,14 +61,37 @@ class MainActivity : AppCompatActivity() {
 //    }
 
     private fun initClass(){
-        binding.button.setOnClickListener{
-            var intent = Intent(
-                this,
-                MainActivity2::class.java
-            )
-            intent.putExtra("var1" , binding.edit.text.toString())
 
-            startActivity(intent)
+
+
+        binding.button.setOnClickListener{
+            val loginVal = LoginValidator()
+            val check = loginVal.checkLogin( binding.editName.text.toString(), binding.editPass.text.toString())
+
+
+
+
+//            if ( binding.editName.text.toString() == "admin" && binding.editName.text.toString() == "admin"){
+            if (check){
+                var intent = Intent(
+                    this,
+                    MainActivity2::class.java
+                )
+
+
+
+                intent.putExtra("var1" ,
+                    ""
+//                binding.edit_.text.toString()
+                )
+                intent.putExtra("var2", 2)
+                startActivity(intent)
+            }else{
+                Snackbar.make(binding.textView, "Usuario o contraseña invalidos", Snackbar.LENGTH_LONG).show()
+            }
+
+
+
         }
     }
 
