@@ -17,7 +17,7 @@ class MainActivity2 : AppCompatActivity() {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
     }
-//    otro cambio, ss
+
     override fun onStart() {
         super.onStart()
 
