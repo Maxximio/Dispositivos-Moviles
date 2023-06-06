@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import com.exam.dispositivosmoviles.R
 import com.exam.dispositivosmoviles.databinding.ActivityMain2Binding
-import com.exam.dispositivosmoviles.databinding.ActivityMainBinding
+
 
 class MainActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
@@ -40,7 +40,7 @@ class MainActivity2 : AppCompatActivity() {
         binding.button2.setOnClickListener{
             var intent = Intent(
                 this,
-                MainActivity::class.java
+                PedidosActivity::class.java
             )
 
             startActivity(intent)
