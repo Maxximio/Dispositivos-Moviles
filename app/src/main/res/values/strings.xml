@@ -2,4 +2,7 @@
     <string name="app_name">Dispositivos Moviles</string>
     <string name="name_banner">Fast and Delicious Food</string>
     <string name="button">Cancelar</string>
+    <string name="ayuda">Ayuda</string>
+    <string name="mapa">Mapa</string>
+    <string name="home">Home</string>
 </resources>
