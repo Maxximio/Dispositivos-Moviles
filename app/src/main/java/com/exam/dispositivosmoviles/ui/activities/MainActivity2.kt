@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import com.exam.dispositivosmoviles.R
 import com.exam.dispositivosmoviles.databinding.ActivityMain2Binding
+import com.exam.dispositivosmoviles.ui.fragments.FirstFragment
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -68,7 +69,13 @@ class MainActivity2 : AppCompatActivity() {
                 }
                 R.id.item_3 -> {
                     // Respond to navigation item 2 reselection
-                    Snackbar.make(binding.respuesta,"Entramos a mapa",Snackbar.LENGTH_LONG).show()
+                    val fragment = FirstFragment()
+                    val transaccion = supportFragmentManager.beginTransaction()
+                    transaccion.add(binding.frmContainer.id, fragment)
+                    transaccion.addToBackStack(null)
+                    transaccion.commit()
+
+
                     true
                 }
                 else -> false
