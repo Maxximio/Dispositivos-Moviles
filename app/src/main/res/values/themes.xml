@@ -7,7 +7,7 @@
 
     <style name="Theme.DispositivosMoviles" parent="Base.Theme.DispositivosMoviles" >
         <item name="android:fontFamily">@font/roboto_light</item>
-        <item name="android:backgroundTint">@color/backgraund_dm</item>
+        <item name="android:backgroundTint">@color/blue_dm</item>
         <item name="android:textColor" >@color/white_dm</item>
         <item name="android:textSize">14sp</item>
 
@@ -53,5 +53,7 @@
 
     </style>
 
-
+    <style name="ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/white_dm</item>
+    </style>
 </resources>

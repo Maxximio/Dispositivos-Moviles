@@ -5,14 +5,13 @@
         android:id="@+id/item_1"
         android:enabled="true"
         android:icon="@android:drawable/ic_menu_myplaces"
-        android:iconTint="#FDFDFD"
+
         android:title="@string/home" />
 
     <item
         android:id="@+id/item_2"
         android:enabled="true"
         android:icon="@android:drawable/ic_dialog_alert"
-        android:iconTint="#FFFFFF"
         android:title="@string/ayuda" />
 
     <item

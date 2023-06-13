@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#26A69A"
     android:backgroundTint="#424242"
+    android:foregroundTint="#0277BD"
     tools:context=".ui.activities.MainActivity2">
 
     <!--        android: = "center"-->
@@ -43,13 +44,19 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="411dp"
         android:layout_height="91dp"
-        android:background="#8C92B3"
+        android:foregroundTint="#0277BD"
+        app:itemActiveIndicatorStyle="@style/ActiveIndicator"
+
+        app:itemIconTint="@drawable/cualquiera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2"
         app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/bottom_navigation_menu"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />
+
+    <!--        app:itemRippleColor="#EFDFDF"-->
+    <!--    android:background="#8C92B3"-->
 
     <Button
         android:id="@+id/button2"
@@ -60,6 +67,7 @@
         android:backgroundTint="#8E4545"
         android:text="Mejor boton dle mundo"
         android:textColor="#000000"
+        app:iconTint="#5C5959"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/respuesta" />
 
