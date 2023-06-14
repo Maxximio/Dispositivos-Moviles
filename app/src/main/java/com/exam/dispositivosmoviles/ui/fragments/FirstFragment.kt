@@ -38,6 +38,7 @@ class FirstFragment : Fragment() {
             R.layout.simple_layout, list)
 
         binding.spinner.adapter = adapter
+        binding.listview.adapter= adapter
 
     }
 
