@@ -36,8 +36,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="192dp"
+        android:layout_height="138dp"
 
 
         android:layout_marginStart="104dp"
@@ -51,8 +51,8 @@
         <pl.droidsonroids.gif.GifImageView
 
             android:id="@+id/banana"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="185dp"
+            android:layout_height="136dp"
             android:layout_gravity="center"
 
 
@@ -64,7 +64,8 @@
         android:layout_width="370dp"
         android:layout_height="38dp"
         android:layout_margin="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="332dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
@@ -77,12 +78,12 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMarvelChars"
+            android:layout_width="match_parent"
+            android:layout_height="155dp" />
 
     </LinearLayout>
 

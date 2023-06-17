@@ -5,13 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
+
 import android.widget.ArrayAdapter
 import android.widget.SimpleAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.exam.dispositivosmoviles.R
-import com.exam.dispositivosmoviles.databinding.ActivityMainBinding
-import com.exam.dispositivosmoviles.databinding.FragmentFirstBinding
 
+import com.exam.dispositivosmoviles.databinding.FragmentFirstBinding
+import com.exam.dispositivosmoviles.logic.lists.ListItems
+import com.exam.dispositivosmoviles.ui.adapters.Adapter
 
 class FirstFragment : Fragment() {
 
@@ -38,8 +41,12 @@ class FirstFragment : Fragment() {
             R.layout.simple_layout, list)
 
         binding.spinner.adapter = adapter
-        binding.listview.adapter= adapter
+//        binding.listview.adapter= adapter
 
+        val rvAdapter = Adapter(ListItems<Any>().returnMarvelChars())
+        val rvMarvel = binding.rvMarvelChars
+        rvMarvel.adapter = rvAdapter
+        rvMarvel.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL,false)
     }
 
 }
