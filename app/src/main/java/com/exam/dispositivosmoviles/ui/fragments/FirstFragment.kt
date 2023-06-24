@@ -8,16 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 
 import android.widget.ArrayAdapter
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.exam.dispositivosmoviles.R
 import com.exam.dispositivosmoviles.data.entities.MarvelChars
 
 import com.exam.dispositivosmoviles.databinding.FragmentFirstBinding
+import com.exam.dispositivosmoviles.logic.jikanLogic.JikanAnimeLogic
 import com.exam.dispositivosmoviles.logic.lists.ListItems
 import com.exam.dispositivosmoviles.ui.activities.DetailsMarvelActivity
 import com.exam.dispositivosmoviles.ui.activities.MainActivity
 import com.exam.dispositivosmoviles.ui.activities.PedidosActivity
 import com.exam.dispositivosmoviles.ui.adapters.MarvelAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FirstFragment : Fragment() {
 
@@ -76,17 +81,26 @@ class FirstFragment : Fragment() {
     }
 
     fun chargeDataRV(){
-        val rvAdapter = MarvelAdapter(
-            ListItems<Any>().returnMarvelChars()
-        ) { sendMarvelItem(it) }
-        val rvMarvel = binding.rvMarvelChars
+        lifecycleScope.launch(Dispatchers.IO){
+            val rvAdapter = MarvelAdapter(
+//            ListItems<Any>().returnMarvelChars()
+                JikanAnimeLogic().getAllAnimes()
+            ) { sendMarvelItem(it) }
 
-        with(rvMarvel){
-            this.adapter=rvAdapter
-            this.layoutManager=LinearLayoutManager(
-                requireActivity(),LinearLayoutManager.VERTICAL,false
-            )
+            withContext(Dispatchers.Main){
+                val rvMarvel = binding.rvMarvelChars
+
+                with(rvMarvel){
+                    this.adapter=rvAdapter
+                    this.layoutManager=LinearLayoutManager(
+                        requireActivity(),LinearLayoutManager.VERTICAL,false
+                    )
+                }
+            }
+
+
         }
+
     }
 
 }

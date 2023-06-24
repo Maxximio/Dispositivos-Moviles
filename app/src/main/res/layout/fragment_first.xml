@@ -83,12 +83,12 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/rvSwipe"
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="336dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMarvelChars"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_height="336dp" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </LinearLayout>
