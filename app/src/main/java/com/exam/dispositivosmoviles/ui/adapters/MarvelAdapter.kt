@@ -11,9 +11,10 @@ import com.squareup.picasso.Picasso
 
 class MarvelAdapter(
 
-    private val items: List<MarvelChars>,
+
     private var fnClick: (MarvelChars) -> Unit
 ):RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
+    var items: List<MarvelChars> = listOf()
     class MarvelViewHolder(view:View): RecyclerView.ViewHolder(view) {
 
 
@@ -55,6 +56,10 @@ fnClick(item)
 
     override fun getItemCount(): Int =items.size
 
+    fun updateListItems(newItems : List<MarvelChars>){
+        this.items = this.items.plus(newItems)
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: MarvelViewHolder, position: Int) {
 
