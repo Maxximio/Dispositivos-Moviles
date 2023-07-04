@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 
 import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.exam.dispositivosmoviles.R
 import com.exam.dispositivosmoviles.data.entities.MarvelChars
+import com.exam.dispositivosmoviles.data.entities.marvel.Marvel
 
 import com.exam.dispositivosmoviles.databinding.FragmentFirstBinding
 import com.exam.dispositivosmoviles.logic.jikanLogic.JikanAnimeLogic
@@ -31,6 +33,8 @@ class FirstFragment : Fragment() {
     private  lateinit var binding: FragmentFirstBinding
     private lateinit var lmanager: LinearLayoutManager
     private  var rvAdapter: MarvelAdapter = MarvelAdapter { sendMarvelItem(it) }
+
+    private lateinit var marvelCharItems: MutableList<MarvelChars>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -107,7 +111,13 @@ class FirstFragment : Fragment() {
 
 
 
+
         })
+
+        binding.txtFilter.addTextChangedListener{txtFilter -> val result = marvelCharItems.filter { items -> items.nombre.contains(txtFilter.toString()) }
+        }
+
+        rvAdapter.replaceListItems(marvelCharItems)
     }
 
     fun sendMarvelItem(item: MarvelChars){
@@ -129,6 +139,10 @@ class FirstFragment : Fragment() {
         }
     }
     fun chargeDataRV(search: String){
+
+
+
+
         lifecycleScope.launch(Dispatchers.IO){
 //            val rvAdapter = MarvelAdapter(
 //            ListItems<Any>().returnMarvelChars()
@@ -138,22 +152,25 @@ class FirstFragment : Fragment() {
 //                JikanAnimeLogic().getAllAnimes()
 //            ) { sendMarvelItem(it) }
 
-            rvAdapter.items =
-                JikanAnimeLogic().getAllAnimes()
+//            rvAdapter.items =
+//                JikanAnimeLogic().getAllAnimes()
 
-
-            withContext(Dispatchers.Main){
-                val rvMarvel = binding.rvMarvelChars
-
-                with(rvMarvel){
-                    this.adapter=rvAdapter
-                    this.layoutManager= lmanager
-                }
-            }
-
-
-
-        }
+//            var jikanItems = rvAdapter.items =
+//                JikanAnimeLogic().getAllAnimes()
+//
+//
+//            withContext(Dispatchers.Main){
+//                val rvMarvel = binding.rvMarvelChars
+//
+//                with(rvMarvel){
+//                    this.adapter=rvAdapter
+//                    this.layoutManager= lmanager
+//                }
+//            }
+//
+//
+//
+//        }
 
     }
 

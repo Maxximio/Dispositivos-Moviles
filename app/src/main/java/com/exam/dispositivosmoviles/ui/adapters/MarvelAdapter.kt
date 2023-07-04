@@ -61,6 +61,11 @@ fnClick(item)
         notifyDataSetChanged()
     }
 
+    fun replaceListItems(newItems : List<MarvelChars>){
+        this.items = newItems
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: MarvelViewHolder, position: Int) {
 
         holder.render(items[position], fnClick)
