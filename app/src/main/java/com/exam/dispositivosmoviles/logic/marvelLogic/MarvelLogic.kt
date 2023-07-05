@@ -2,8 +2,7 @@ package com.exam.dispositivosmoviles.logic.marvelLogic
 
 import com.exam.dispositivosmoviles.data.connections.ConnectionApi
 import com.exam.dispositivosmoviles.data.endpoints.MarvelEndpoint
-import com.exam.dispositivosmoviles.data.entities.MarvelChars
-import com.exam.dispositivosmoviles.data.entities.marvel.Marvel
+import com.exam.dispositivosmoviles.logic.data.MarvelChars
 
 class MarvelLogic {
 

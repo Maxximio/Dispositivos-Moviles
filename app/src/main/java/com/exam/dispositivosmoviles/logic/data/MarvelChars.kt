@@ -1,4 +1,4 @@
-package com.exam.dispositivosmoviles.data.entities
+package com.exam.dispositivosmoviles.logic.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

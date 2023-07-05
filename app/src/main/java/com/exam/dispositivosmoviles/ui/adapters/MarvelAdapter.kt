@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.exam.dispositivosmoviles.R
-import com.exam.dispositivosmoviles.data.entities.MarvelChars
+import com.exam.dispositivosmoviles.logic.data.MarvelChars
 import com.exam.dispositivosmoviles.databinding.MarvelCharactersBinding
 import com.squareup.picasso.Picasso
 
@@ -13,19 +13,18 @@ class MarvelAdapter(
 
 
     private var fnClick: (MarvelChars) -> Unit
-):RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
+):
+    RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
+
     var items: List<MarvelChars> = listOf()
     class MarvelViewHolder(view:View): RecyclerView.ViewHolder(view) {
-
-
-
 
         private val binding: MarvelCharactersBinding= MarvelCharactersBinding.bind(view)
 
 //        este es la parte que importa
         fun render(
-            item: MarvelChars,
-            fnClick: (MarvelChars) ->Unit
+    item: MarvelChars,
+    fnClick: (MarvelChars) ->Unit
         ){
             binding.marvelT.text=item.nombre
             binding.nameT.text=item.comic

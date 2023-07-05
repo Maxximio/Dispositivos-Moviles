@@ -2,8 +2,7 @@ package com.exam.dispositivosmoviles.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.exam.dispositivosmoviles.R
-import com.exam.dispositivosmoviles.data.entities.MarvelChars
+import com.exam.dispositivosmoviles.logic.data.MarvelChars
 import com.exam.dispositivosmoviles.databinding.ActivityDetailsMarvelBinding
 import com.squareup.picasso.Picasso
 

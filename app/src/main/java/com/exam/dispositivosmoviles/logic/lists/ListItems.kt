@@ -1,7 +1,7 @@
 package com.exam.dispositivosmoviles.logic.lists
 
 import com.exam.dispositivosmoviles.data.entities.LoginUser
-import com.exam.dispositivosmoviles.data.entities.MarvelChars
+import com.exam.dispositivosmoviles.logic.data.MarvelChars
 
 class ListItems<T> {
 
