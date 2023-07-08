@@ -12,8 +12,7 @@ import com.squareup.picasso.Picasso
 class MarvelAdapter(
 
 
-    private var fnClick: (MarvelChars) -> Unit
-):
+    private var fnClick: (MarvelChars) -> Unit):
     RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
 
     var items: List<MarvelChars> = listOf()

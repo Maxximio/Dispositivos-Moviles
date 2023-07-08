@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.exam.dispositivosmoviles.R
@@ -27,9 +28,10 @@ class FirstFragment : Fragment() {
 
     private lateinit var binding: FragmentFirstBinding
     private lateinit var lManager: LinearLayoutManager
+    private lateinit var gManager: GridLayoutManager
+
     private  var rvAdapter: MarvelAdapter =MarvelAdapter{
-        sendMarvelItem(it)
-    }
+        sendMarvelItem(it) }
 
     private  var marvelCharItems: MutableList<MarvelChars> = mutableListOf<MarvelChars>()
     override fun onCreateView(
@@ -39,9 +41,10 @@ class FirstFragment : Fragment() {
 
         lManager = LinearLayoutManager(
             requireActivity(),
-            LinearLayoutManager.HORIZONTAL
+            LinearLayoutManager.VERTICAL
             , false
         )
+        gManager= GridLayoutManager(requireActivity(),2)
         return binding.root
     }
 
@@ -68,26 +71,22 @@ class FirstFragment : Fragment() {
             binding.rvSwipe.isRefreshing = false
         }
 
-        binding.rvMarvelChars.addOnScrollListener(
-            object : RecyclerView.OnScrollListener() {
+        binding.rvMarvelChars.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val elementos = lManager.childCount
+                    val posicion = lManager.findFirstVisibleItemPosition()
+                    val tamanio = lManager.itemCount
 
                 if (dy > 0) {
-                    val v = lManager.childCount
-                    val p = lManager.findFirstVisibleItemPosition()
-                    val t = lManager.itemCount
-                    if ((v + p) >= t) {
-                        lifecycleScope.launch(Dispatchers.Main){
-
-                            lifecycleScope.launch(Dispatchers.IO)
-                            {
-
-
+                    if ((elementos + posicion) >= tamanio) {
+                        chargeDataRV(search= "spider")
+                        lifecycleScope.launch(Dispatchers.IO){
+                            val items=MarvelLogic().getAllMarvelChars(0,99)
                              withContext(Dispatchers.Main) {
-                                    rvAdapter.updateListItems(newItems)
+                                    rvAdapter.updateListItems(items)
                                 }
-                            }
                         }
                     }
 
@@ -127,8 +126,9 @@ class FirstFragment : Fragment() {
         }
     }
 
-    private fun chargeDataRV() {
-        lifecycleScope.launch(Dispatchers.Main) {
+    private fun chargeDataRV( search:String) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            rvAdapter.items=MarvelLogic().getAllMarvelChars(0,30)
 
             marvelCharItems = withContext(Dispatchers.IO){
                 return@withContext (MarvelLogic().getCharactersStartsWith(
