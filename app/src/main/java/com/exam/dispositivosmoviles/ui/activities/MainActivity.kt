@@ -9,6 +9,7 @@ import android.widget.SearchView
 import android.widget.TextView
 import com.exam.dispositivosmoviles.databinding.ActivityMainBinding
 import com.exam.dispositivosmoviles.login.validator.LoginValidator
+import com.exam.dispositivosmoviles.ui.utilities.DispositivosMoviles
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +32,11 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         initClass()
+
+//        esto nos permite acceder sin instanciar
+        val db = DispositivosMoviles.getDbInstance()
+        db.marvelDao()
+
 
     }
 

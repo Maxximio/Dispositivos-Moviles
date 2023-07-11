@@ -126,6 +126,7 @@ class FirstFragment : Fragment() {
         }
     }
 
+}
     private fun chargeDataRV( search:String) {
         lifecycleScope.launch(Dispatchers.IO) {
             rvAdapter.items=MarvelLogic().getAllMarvelChars(0,30)
@@ -146,4 +147,39 @@ class FirstFragment : Fragment() {
         }
 
     }
+
+private fun chargeDataRVDB( search:String) {
+    lifecycleScope.launch(Dispatchers.Main) {
+
+        marvelCharItems = lifecycleScope(Dispatchers.IO)
+        var marvelCharItems = MarvelLogic()
+            .getAll().toMutableList()
+
+        rvAdapter.items=MarvelLogic().getAllMarvelChars(0,30)
+
+
+
+        if(marvelCharsItems.isEmpty()){
+            marvelCharItems = withContext(Dispatchers.IO){
+                return@withContext (MarvelLogic().getAll().toMutableList()
+                        ))
+            }
+        }
+
+        withContext(Dispatchers.IO){
+            MarvelLogic().insertMarvelCharstoDB(marvelCharsItems)
+        }
+
+        rvAdapter.items= marvelCharItems
+
+        binding.rvMarvelChars.apply {
+            this.adapter = rvAdapter
+            this.layoutManager = lManager
+
+
+//            this.layoutManager = gManager
+//            gManager.scrollToPositionWithOffset(pos, 10)
+        }
+    }
+
 }
