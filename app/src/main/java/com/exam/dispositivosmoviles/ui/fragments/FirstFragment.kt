@@ -31,20 +31,28 @@ class FirstFragment : Fragment() {
     private lateinit var gManager: GridLayoutManager
 
     private  var rvAdapter: MarvelAdapter =MarvelAdapter{
-        sendMarvelItem(it) }
+        sendMarvelItem(it) }///////////////////
 
     private  var marvelCharItems: MutableList<MarvelChars> = mutableListOf<MarvelChars>()
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentFirstBinding.inflate(layoutInflater, container, false)
+        binding = FragmentFirstBinding.inflate(
+            layoutInflater,
+            container,
+            false
+        )
 
         lManager = LinearLayoutManager(
             requireActivity(),
             LinearLayoutManager.VERTICAL
             , false
         )
-        gManager= GridLayoutManager(requireActivity(),2)
+        gManager= GridLayoutManager(
+            requireActivity(),2
+        )
         return binding.root
     }
 
@@ -64,24 +72,30 @@ class FirstFragment : Fragment() {
         )
 
         binding.spinner.adapter = adapter
-        chargeDataRV("cap")
 
         binding.rvSwipe.setOnRefreshListener {
-            chargeDataRV("cap")
+            chargeDataRVDB()
             binding.rvSwipe.isRefreshing = false
         }
 
-        binding.rvMarvelChars.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.rvMarvelChars.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
 
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
+                    /*
+                    val elementos = lManager.childCount
+                    val posicion = lManager.findFirstVisibleItemPosition()
+                    val tamanio = lManager.itemCount*/
+
+                if (dy > 0) {
+
                     val elementos = lManager.childCount
                     val posicion = lManager.findFirstVisibleItemPosition()
                     val tamanio = lManager.itemCount
 
-                if (dy > 0) {
                     if ((elementos + posicion) >= tamanio) {
-                        chargeDataRV(search= "spider")
+                        //chargeDataRV(search= "spider")
                         lifecycleScope.launch(Dispatchers.IO){
                             val items=MarvelLogic().getAllMarvelChars(0,99)
                              withContext(Dispatchers.Main) {
@@ -96,13 +110,13 @@ class FirstFragment : Fragment() {
 
         })
 
-        binding.txtFilter.addTextChangedListener { txtFilter ->
+        /*binding.txtFilter.addTextChangedListener { txtFilter ->
             val result =
                 marvelCharItems.filter { items ->
                     items.nombre.lowercase().contains(txtFilter.toString().lowercase())
                 }
             rvAdapter.replaceListItems(result)
-        }
+        }*/
 
 
     }
@@ -113,7 +127,7 @@ class FirstFragment : Fragment() {
         startActivity(i)
     }
 
-    fun coroutine() {
+    /*fun coroutine() {
         lifecycleScope.launch(Dispatchers.Main) {
             var name = "Uno"
             name = withContext(Dispatchers.IO) {
@@ -124,62 +138,78 @@ class FirstFragment : Fragment() {
             binding.cardView2.radius
 
         }
-    }
+    }*/
 
-}
     private fun chargeDataRV( search:String) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            rvAdapter.items=MarvelLogic().getAllMarvelChars(0,30)
+        lifecycleScope.launch(Dispatchers.Main) {
+            //rvAdapter.items=MarvelLogic().getAllMarvelChars(0,30)
 
             marvelCharItems = withContext(Dispatchers.IO){
-                return@withContext (MarvelLogic().getCharactersStartsWith(
-                    "spider",
+                return@withContext (
+                        MarvelLogic().getAllMarvelChars(
+                    0,
                     20
                 ))
             } as MutableList<MarvelChars>
 
-            rvAdapter.items= marvelCharItems
+            rvAdapter.items=
+                MarvelLogic().getAllMarvelChars(0,99)
 
-                binding.rvMarvelChars.apply {
-                    this.adapter = rvAdapter
-                    this.layoutManager = lManager
-                }
-        }
-
-    }
-
-private fun chargeDataRVDB( search:String) {
-    lifecycleScope.launch(Dispatchers.Main) {
-
-        marvelCharItems = lifecycleScope(Dispatchers.IO)
-        var marvelCharItems = MarvelLogic()
-            .getAll().toMutableList()
-
-        rvAdapter.items=MarvelLogic().getAllMarvelChars(0,30)
-
-
-
-        if(marvelCharsItems.isEmpty()){
-            marvelCharItems = withContext(Dispatchers.IO){
-                return@withContext (MarvelLogic().getAll().toMutableList()
-                        ))
+            binding.rvMarvelChars.apply {
+                this.adapter = rvAdapter
+                this.layoutManager = gManager
             }
         }
 
-        withContext(Dispatchers.IO){
-            MarvelLogic().insertMarvelCharstoDB(marvelCharsItems)
-        }
+    }
+    private fun chargeDataRVDB() {
+        lifecycleScope.launch(Dispatchers.Main) {
 
-        rvAdapter.items= marvelCharItems
+            marvelCharItems = withContext(Dispatchers.IO){
+                var marvelCharItems = MarvelLogic()
+                    .getAll().toMutableList()
 
-        binding.rvMarvelChars.apply {
-            this.adapter = rvAdapter
-            this.layoutManager = lManager
+                if(marvelCharItems.isEmpty()){
+                    marvelCharItems = (MarvelLogic().getCharactersStartsWith(
+                        name="spider",
+                        10
+                    ).toMutableList())
+                    MarvelLogic().insertMarvelCharstoDB(marvelCharItems)
+                }
+                return@withContext marvelCharItems
+            }
+
+            rvAdapter.items=marvelCharItems
+
+
+
+            /*if(marvelCharsItems.isEmpty()){
+                marvelCharItems = withContext(Dispatchers.IO){
+                    return@withContext (MarvelLogic().getAll().toMutableList()
+                            ))
+                }
+            }*/
+
+            /*withContext(Dispatchers.IO){
+                MarvelLogic().insertMarvelCharstoDB(marvelCharsItems)
+            }
+
+            rvAdapter.items= marvelCharItems*/
+
+            binding.rvMarvelChars.apply {
+                this.adapter = rvAdapter
+                this.layoutManager = lManager
 
 
 //            this.layoutManager = gManager
 //            gManager.scrollToPositionWithOffset(pos, 10)
+            }
         }
+
     }
 
+
 }
+
+
+

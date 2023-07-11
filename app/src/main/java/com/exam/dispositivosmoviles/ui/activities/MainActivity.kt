@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
 //        esto nos permite acceder sin instanciar
         val db = DispositivosMoviles.getDbInstance()
-        db.marvelDao()
+        db.mairvelDAO()
 
 
     }

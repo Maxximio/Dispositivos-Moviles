@@ -13,7 +13,7 @@ object ConnectionApi {
 
     private val API_JIKAN="https://api.jikan.moe/v4/";
     private val API_MARVEL="https://gateway.marvel.com/v1/public/";
-    private fun getConnection(base:String): Retrofit{
+    private fun getConnection(base: String): Retrofit{
         var retrofit = Retrofit.Builder()
             .baseUrl(base)
             .addConverterFactory(GsonConverterFactory.create())
@@ -21,7 +21,7 @@ object ConnectionApi {
         return retrofit
     }
 
-    fun <T,E: Enum<E>> getService(api: E, service: Class<T>): T {
+    suspend fun <T,E: Enum<E>> getService(api: E, service: Class<T>): T {
         var BASE=""
         when (api.name ){
             typeApi.Jikan.name->{

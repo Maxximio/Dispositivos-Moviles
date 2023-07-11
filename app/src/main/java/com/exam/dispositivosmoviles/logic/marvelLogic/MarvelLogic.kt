@@ -80,8 +80,6 @@ class MarvelLogic {
         }
 
         DispositivosMoviles
-            .getDbInstance()
-//            .marvelDao()
-            .insertMarvelCharacter(itemsDB)
+            .getDbInstance().mairvelDAO().insertMarvelChar(itemsDB)
     }
 }

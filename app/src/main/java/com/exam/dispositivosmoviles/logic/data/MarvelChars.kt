@@ -12,7 +12,7 @@ data class MarvelChars ( var id: Int,
                          ):Parcelable
 
 fun MarvelChars.getMarvelCharsDB(): MarvelCharsDB{
-    return MarvelChars(
+    return MarvelCharsDB(
         id,
         nombre,
         comic,
