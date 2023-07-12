@@ -82,4 +82,21 @@ class MarvelLogic {
         DispositivosMoviles
             .getDbInstance().mairvelDAO().insertMarvelChar(itemsDB)
     }
-}
+
+    suspend fun getInitChars(limit:Int, offset: Int) : MutableList<MarvelChars>
+        {
+            var marvelCharItems = MarvelLogic()
+                .getAll().toMutableList()
+
+            if(marvelCharItems.isEmpty()){
+                marvelCharItems = (MarvelLogic().getCharactersStartsWith(
+                    name="spider",
+                    10
+                ).toMutableList())
+                MarvelLogic().insertMarvelCharstoDB(marvelCharItems)
+            }
+            return marvelCharItems
+        }
+
+    }
+
