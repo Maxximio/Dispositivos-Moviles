@@ -15,13 +15,13 @@ import com.google.android.material.snackbar.Snackbar
 
 class MainActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
     }
+
+    //respuesta
 
     override fun onStart() {
         super.onStart()
@@ -96,11 +96,9 @@ class MainActivity2 : AppCompatActivity() {
 
     }
 
-
     override fun onBackPressed() {
         super.onBackPressed()
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

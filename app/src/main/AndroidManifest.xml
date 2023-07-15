@@ -24,11 +24,13 @@
             android:name=".ui.activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.PedidosActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.activities.MainActivity2"
-            android:exported="true">
+            android:exported="false">
+        <activity
+            android:name=".ui.activities.PedidosActivity"
+            android:exported="true"
+            tools:ignore="WrongManifestParent" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
