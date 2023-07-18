@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 
 import android.widget.ArrayAdapter
-import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.stringPreferencesKey
 
 import androidx.lifecycle.lifecycleScope
@@ -31,7 +30,6 @@ import com.exam.dispositivosmoviles.ui.utilities.DispositivosMoviles
 import com.exam.dispositivosmoviles.ui.utilities.Metodos
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -44,7 +42,7 @@ class FirstFragment : Fragment() {
     private val limit: Int = 99
     private var offset: Int = 0
 
-    private var rvAdapter: MarvelAdapter = MarvelAdapter() {
+    private var rvAdapter: MarvelAdapter = MarvelAdapter {
         sendMarvelItem(it)
     }
 
@@ -80,7 +78,7 @@ class FirstFragment : Fragment() {
                     Log.d("UCE",user.name )
                     Log.d("UCE",user.email )
                     Log.d("UCE",user.session )
-                    //binding.txtFilter.text = user.name.toString()
+                    //2`11binding.txtFilter.text = user.name.toString()
                 }
         }
 

@@ -1,9 +1,13 @@
 package com.exam.dispositivosmoviles.ui.activities
 
+import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -65,6 +69,50 @@ class PedidosActivity : AppCompatActivity() {
 
             binding.textReg.setOnClickListener {
                 Snackbar.make(binding.textView2, "No te puedes registrar por el momento", Snackbar.LENGTH_LONG).show()
+            }
+
+            binding.btnTwitter.setOnClickListener{
+                                                        //tel:0123456789
+//                val intent =Intent(Intent.ACTION_VIEW, Uri.parse(
+//                    "http://google.com.ec"))//geo:-0.200628,-78.5786066
+//
+                val intent=Intent(Intent.ACTION_WEB_SEARCH)
+                intent.setClassName("com.google.android.googlequicksearchbox"
+                    ,"com.google.android.googlequicksearchbox.SearchActivity"
+                )
+                intent.putExtra(SearchManager.QUERY,"UCE")
+                startActivity(intent)
+                }
+
+            val appResultLocal= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+                resultActivity ->
+                when(resultActivity.resultCode) {
+                    RESULT_OK -> {
+
+                        Snackbar.make(binding.textView3,
+                            "Resultado exitoso",
+                            Snackbar.LENGTH_LONG).show()
+                       // Log.d("UCE","Resultado exitoso")
+                    }
+                    RESULT_CANCELED -> {
+                        //Log.d("UCE","Resultado fallido")
+                        Snackbar.make(binding.textView3,
+                            "Resultado fallido",
+                            Snackbar.LENGTH_LONG).show()
+                    }
+
+                    else -> {
+                    //Log.d("UCE","Resultado dudoso")
+                        Snackbar.make(binding.textView3,
+                            "No tengo idea",
+                            Snackbar.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+            binding.btnFace.setOnClickListener{
+                val resIntent= Intent(this,ResultActivity::class.java)
+                appResultLocal.launch(resIntent)
             }
         }
     }

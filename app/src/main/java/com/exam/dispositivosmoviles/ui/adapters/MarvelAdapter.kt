@@ -13,7 +13,7 @@ class MarvelAdapter(
 
 
     private var fnClick: (MarvelChars) -> Unit,
-    private var fnSave : (MarvelChars) -> Boolean
+    //private var fnSave: (MarvelChars) -> Unit
     ):
     RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
 
@@ -26,7 +26,7 @@ class MarvelAdapter(
         fun render(
     item: MarvelChars,
     fnClick: (MarvelChars) ->Unit,
-    fnSave: (MarvelChars) -> Boolean
+    fnSave: (MarvelChars) -> Unit
         ){
             binding.marvelT.text=item.nombre
             binding.nameT.text=item.comic
@@ -72,7 +72,7 @@ fnClick(item)
 
     override fun onBindViewHolder(holder: MarvelViewHolder, position: Int) {
 
-        holder.render(items[position], fnClick, fnSave)
+       // holder.render(items[position], fnClick, fnSave)
 
     }
 
