@@ -1,5 +1,6 @@
 package com.exam.dispositivosmoviles.ui.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.exam.dispositivosmoviles.R
@@ -18,12 +19,16 @@ class ResultActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         binding.button3.setOnClickListener{
-            setResult(RESULT_OK)
+            val i = Intent()
+            i.putExtra("result", "Resultado exitoso")
+            setResult(RESULT_OK,i)
             finish()
         }
 
         binding.button4.setOnClickListener{
-            setResult(RESULT_CANCELED)
+            val i = Intent()
+            i.putExtra("result", "Resultado exitoso")
+            setResult(RESULT_CANCELED,i)
             finish()
         }
     }
