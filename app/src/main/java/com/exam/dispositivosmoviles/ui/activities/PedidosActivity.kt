@@ -14,6 +14,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
+import android.provider.Settings
 import android.speech.RecognizerIntent
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,12 +28,18 @@ import androidx.lifecycle.lifecycleScope
 import com.exam.dispositivosmoviles.R
 import com.exam.dispositivosmoviles.databinding.ActivityPedidosBinding
 import com.exam.dispositivosmoviles.login.validator.LoginValidator
+import com.exam.dispositivosmoviles.ui.utilities.MyLocationManager
+import com.google.android.gms.common.api.GoogleApi
+import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.LocationSettingsStatusCodes
 import com.google.android.gms.location.Priority
+import com.google.android.gms.location.SettingsClient
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +48,6 @@ import java.security.Permission
 import java.util.Locale
 import java.util.UUID
 
-
 val Context.dataStore: DataStore<androidx.datastore.preferences.core.Preferences> by preferencesDataStore(
     name = "settings"
 )
@@ -49,9 +55,16 @@ val Context.dataStore: DataStore<androidx.datastore.preferences.core.Preferences
 class PedidosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPedidosBinding
+    //Ubicacion y GPS
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
+    private lateinit var client: SettingsClient
+    private lateinit var locationSettingsRequest: LocationSettingsRequest
+
+//    private val client= LocationServices.getSettingsClient(this)//el this da error por problemas en el ciclo de vida
+//    private val locationSettingsRequest =LocationSettingsRequest.Builder()
+//        .addLocationRequest(locationRequest).build()
 
     private  var currentLocation: Location? = null
 
@@ -98,46 +111,36 @@ class PedidosActivity : AppCompatActivity() {
     @SuppressLint("MissingPermission")
     private val locationContract =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-
                 isGranted ->
             when (isGranted) {
                 true -> {
-                    val task = fusedLocationProviderClient.lastLocation
-
-                    task.addOnSuccessListener { location ->
-                        fusedLocationProviderClient.requestLocationUpdates(
-                            locationRequest,
-                            locationCallback,
-                            Looper.getMainLooper()
-                        )
-                    }
-//                    task.addOnFailureListener()
-
-                    task.addOnFailureListener{
-                        val alert = AlertDialog.Builder(this, com.google.android.material.R.style.ThemeOverlay_MaterialAlertDialog_Material3_Title_Icon)
-                        alert.apply {
-                            setTitle("Alerta")
-                            setMessage("Existe un problema con el sistema" +
-                                    "de posicionamiento global en el sistema")
-                            setPositiveButton("Ok"){ dialog, id ->
-                                dialog.dismiss()
-
+                    client.checkLocationSettings(locationSettingsRequest).apply {
+                        addOnSuccessListener {
+                            val task = fusedLocationProviderClient.lastLocation
+                            task.addOnSuccessListener { location ->
+                                fusedLocationProviderClient.requestLocationUpdates(
+                                    locationRequest,
+                                    locationCallback,
+                                    Looper.getMainLooper()
+                                )
                             }
-                            setNegativeButton("Cancelar"){dialog, id ->
-                                dialog.dismiss()
+                        }
+
+                        addOnFailureListener{ex->
+                            if(ex is ResolvableApiException){
+                                ex.startResolutionForResult(
+                                    this@PedidosActivity,
+                                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED
+                                )
                             }
-                            setCancelable(false)
-                        }.create()
-                        alert.show()
+                        }
                     }
                 }
 
                 shouldShowRequestPermissionRationale(
                     android.Manifest.permission.ACCESS_FINE_LOCATION
                 ) -> {
-
                 }
-
                 false -> {
                 }
             }
@@ -147,18 +150,10 @@ class PedidosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPedidosBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.d("UCE","Entrando onCreate")
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        locationRequest = LocationRequest.Builder(
-            Priority.PRIORITY_HIGH_ACCURACY, 2000
-        )
-            .setMaxUpdates(3)
-            .build()
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(LocationResult: LocationResult) {
                 super.onLocationResult(LocationResult)
-
                 if (LocationResult != null) {
                     LocationResult.locations.forEach { location ->
                         currentLocation = location
@@ -171,6 +166,35 @@ class PedidosActivity : AppCompatActivity() {
             }
         }
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+
+
+        locationRequest = LocationRequest.Builder(
+            Priority.PRIORITY_HIGH_ACCURACY, 2000
+        )
+            .setMaxUpdates(3)
+            .build()
+
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(LocationResult: LocationResult) {
+                super.onLocationResult(LocationResult)
+                if (LocationResult != null) {
+                    LocationResult.locations.forEach { location ->
+                        currentLocation = location
+                        Log.d(
+                            "UCE",
+                            "Ubicacion: ${location.latitude}, " + "${location.longitude}"
+                        )
+                    }
+                }
+            }
+        }
+
+        client=LocationServices.getSettingsClient(this)
+        locationSettingsRequest=LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest).build()
+
     }
 
     override fun onStart() {
@@ -181,7 +205,6 @@ class PedidosActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
     }
-
 
     override fun onPause() {
         super.onPause()
@@ -197,31 +220,26 @@ class PedidosActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun initClass() {
-
         binding.btnLogin.setOnClickListener {
             val loginVal = LoginValidator()
             val check = loginVal.checkLogin(
                 binding.editName.text.toString(),
                 binding.editPass.text.toString()
             )
-
             if (check) {
                 lifecycleScope.launch(Dispatchers.IO) {
                     saveDataStore(binding.editName.text.toString())
                 }
-
                 var intent = Intent(
                     this,
                     MainActivity2::class.java
                 )
-
                 intent.putExtra(
                     "var1",
                     ""
                 )
                 intent.putExtra("var2", 2)
                 startActivity(intent)
-
             } else {
                 Snackbar.make(
                     binding.textView2,
@@ -246,7 +264,6 @@ class PedidosActivity : AppCompatActivity() {
 
             val appResultLocal =
                 registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-
                         resultActivity ->
                     val sn = Snackbar.make(
                         binding.textView3,
@@ -259,27 +276,23 @@ class PedidosActivity : AppCompatActivity() {
                         RESULT_OK -> {
                             sn.setBackgroundTint(resources.getColor((R.color.blue_dm)))
                             resultActivity.data?.getStringExtra("result").orEmpty()
-
                         }
-
                         RESULT_CANCELED -> {
                             sn.setBackgroundTint(resources.getColor((R.color.black)))
                             resultActivity.data?.getStringExtra("result").orEmpty()
                         }
-
                         else -> {
                             resultActivity.data?.getStringExtra("result").orEmpty()
                         }
                     }
-
                     sn.setText(message)
                     sn.show()
                 }
 
-
-
-
             binding.btnFace.setOnClickListener() {
+
+
+
                 val intentSpeech = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
                 intentSpeech.putExtra(
                     RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -294,15 +307,15 @@ class PedidosActivity : AppCompatActivity() {
                 )
                 speechToText.launch(intentSpeech)
             }
-
-
-
             binding.btnFace.setOnClickListener {
                 val resIntent = Intent(this, ResultActivity::class.java)
                 appResultLocal.launch(resIntent)
             }
-
     }
 
+    private fun test(){
+        var location=MyLocationManager(this)
+        location.getUserLocation()
+    }
 
 }
