@@ -9,7 +9,7 @@
         <item name="android:fontFamily">@font/roboto_light</item>
         <!--        <item name="android:backgroundTint">@color/blue_dm</item>-->
         <item name="android:textColor">@color/white_dm</item>
-        <item name="android:textSize">14sp</item>
+        <!--   <item name="android:textSize">14sp</item>-->
 
     </style>
 
