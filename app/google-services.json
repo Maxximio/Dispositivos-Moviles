@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "628524900455",
+    "project_id": "labo-services",
+    "storage_bucket": "labo-services.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628524900455:android:27eab28fb18b8aac2234c2",
+        "android_client_info": {
+          "package_name": "com.exam.dispositivosmoviles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628524900455-c203s7cqn15mj2j66mm27kd2uhefsbsb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4pfkD9SNAxy7QU0GRR36hmnX4TYav4VI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628524900455-c203s7cqn15mj2j66mm27kd2uhefsbsb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
